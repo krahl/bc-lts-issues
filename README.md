@@ -1,14 +1,20 @@
 # BouncyCastle LTS TLS issues
 
-Generate initial keypair
+Checkout code and compile it
 
 ```bash
 # Compile code
 ./mvnw clean install
+```
 
+Generate Java keystore with RSA key pair
+
+```bash
 # Generate server key
 keytool -genkeypair -alias mykey -keyalg RSA -keysize 4096 -validity 365 -keystore server.jks -storepass changeme
+```
 
+```bash
 # start TLS server on port 8443
 java -cp "target/tls-test-1.0-SNAPSHOT.jar:target/libs/*" com.example.tls.SimpleTLSServer
 ```
@@ -55,4 +61,12 @@ Caused by: javax.crypto.ShortBufferException: Need at least 144 bytes of space i
         at java.base/javax.crypto.Cipher.update(Cipher.java:2043)
         at java.base/sun.security.ssl.SSLCipher$T11BlockWriteCipherGenerator$BlockWriteCipher.encrypt(SSLCipher.java:1520)
         ... 10 more
+```
+
+## Successful handshake
+
+When server is started with argument `--default-ciphers` it seems to suggest a non-CBC cipher suite and the handshake succeeds.
+```bash
+# start TLS server on port 8443
+java -cp "target/tls-test-1.0-SNAPSHOT.jar:target/libs/*" com.example.tls.SimpleTLSServer --default-ciphers
 ```
