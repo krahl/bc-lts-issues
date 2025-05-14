@@ -4,12 +4,14 @@ import javax.net.ssl.*;
 
 import java.io.*;
 import java.security.KeyStore;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class SimpleTLSServer {
 
-    private static final List<String> CIPHER_SUITES = List.of(
+    private static final List<String> CIPHER_SUITES = Collections.unmodifiableList(Arrays.asList(
             "TLS_DHE_RSA_WITH_AES_128_CBC_SHA",
             "TLS_DHE_RSA_WITH_AES_128_CBC_SHA256",
             "TLS_DHE_RSA_WITH_AES_256_CBC_SHA",
@@ -22,7 +24,7 @@ public class SimpleTLSServer {
             "TLS_RSA_WITH_AES_128_CBC_SHA256",
             "TLS_RSA_WITH_AES_256_CBC_SHA",
             "TLS_RSA_WITH_AES_256_CBC_SHA256"
-    );
+    ));
 
     private static final AtomicInteger COUNTER = new AtomicInteger(0);
 
